@@ -1,0 +1,42 @@
+{
+  "system": "bm25",
+  "label": "",
+  "options": {},
+  "split": "test",
+  "note": "",
+  "corpus_size": 5183,
+  "n_queries": 300,
+  "index_seconds": 1.0617287999484688,
+  "index_cached": false,
+  "k": 10,
+  "spec": {
+    "dataset": "scifact",
+    "system": "bm25",
+    "label": "",
+    "overrides": {},
+    "split": "test",
+    "sample": null,
+    "corpus_size": null,
+    "seed": 0
+  },
+  "env": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "jevragrank": "0.1.0",
+      "torch": "2.14.0+cu126",
+      "transformers": "5.17.0",
+      "sentence-transformers": "6.1.0",
+      "bm25s": "0.3.11",
+      "ranx": "0.3.21",
+      "httpx": "0.28.1",
+      "numpy": "2.5.3"
+    },
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "driver": "566.36",
+    "gpu_memory": "8188 MiB",
+    "cuda": "12.6",
+    "git_commit": "d3a1f9f7a4809aa9f38a27d576dcf9d4798d79ab"
+  },
+  "started": "2026-09-24T16:49:54.733950+00:00"
+}

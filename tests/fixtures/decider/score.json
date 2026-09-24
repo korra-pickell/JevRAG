@@ -1,0 +1,357 @@
+{
+  "model": "decider-v10",
+  "answers": {
+    "c0": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c1": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c2": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c3": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c4": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c5": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c6": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c7": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c8": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c9": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c10": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    },
+    "c11": {
+      "type": "score",
+      "score": 1.91,
+      "confidence": 0.0,
+      "x_p_max": 0.2964,
+      "certainty": 0.0283,
+      "legend": {
+        "0": "irrelevant",
+        "1": "same topic, doesn't help",
+        "2": "partially answers",
+        "3": "mostly answers",
+        "4": "fully answers"
+      },
+      "probabilities": {
+        "0": 0.2964,
+        "1": 0.1397,
+        "2": 0.1721,
+        "3": 0.1457,
+        "4": 0.2461
+      },
+      "level_fit": {
+        "0": 0.2487,
+        "1": 0.1172,
+        "2": 0.1444,
+        "3": 0.1223,
+        "4": 0.2065
+      },
+      "fit_mass": 0.8391
+    }
+  },
+  "usage": {
+    "input_tokens": 1918,
+    "output_tokens": 0
+  }
+}

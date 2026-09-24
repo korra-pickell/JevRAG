@@ -1,0 +1,12 @@
+services:
+  decider:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DECIDER_MODEL: ${DECIDER_MODEL:-Mapika/decider-2b}
+    volumes:
+      - ${HOME:-~}/.cache/huggingface:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices: [{ driver: nvidia, count: 1, capabilities: [gpu] }]

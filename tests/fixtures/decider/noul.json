@@ -1,0 +1,57 @@
+{
+  "model": "decider-v10",
+  "answers": {
+    "c0": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c1": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c2": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c3": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c4": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c5": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c6": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c7": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c8": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c9": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c10": {
+      "type": "noul",
+      "noul": 0.2487
+    },
+    "c11": {
+      "type": "noul",
+      "noul": 0.2487
+    }
+  },
+  "usage": {
+    "input_tokens": 451,
+    "output_tokens": 0
+  }
+}

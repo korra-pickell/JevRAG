@@ -1,0 +1,51 @@
+[project]
+name = "jevragrank"
+version = "0.1.0"
+description = "Typed-decision (Jev) reranking and retrieval for RAG, with open benchmarks."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Korra Pickell" }]
+requires-python = ">=3.10"
+dependencies = ["httpx>=0.27", "numpy>=1.26"]
+
+[project.optional-dependencies]
+dense = ["sentence-transformers>=3.0"]
+bm25 = ["bm25s>=0.2.10", "PyStemmer>=2.2"]
+baselines = ["sentence-transformers>=3.0", "transformers>=4.57", "torch>=2.5", "accelerate>=1.0"]
+bench = ["jevragrank[dense,bm25,baselines]", "ranx>=0.3.20", "matplotlib>=3.9"]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "ruff>=0.6", "bm25s>=0.2.10", "PyStemmer>=2.2",
+       "ranx>=0.3.20", "matplotlib>=3.9"]
+
+[project.scripts]
+jevragrank-bench = "bench.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jevragrank", "bench"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu126", marker = "sys_platform == 'win32'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["slow: downloads models or datasets", "live: needs a running Jev server",
+           "gpu: needs a CUDA GPU"]
+addopts = "-m 'not slow and not live and not gpu'"
+filterwarnings = ["ignore::SyntaxWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

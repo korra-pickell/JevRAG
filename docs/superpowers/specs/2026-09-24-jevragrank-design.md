@@ -2,7 +2,7 @@
 
 - **Date:** 2026-09-24
 - **Status:** Approved in brainstorming, pending written-spec review
-- **Repo:** `jevragrank` (MIT), local at `C:\PRGM\JevRAG`, to be published on GitHub after explicit approval
+- **Repo:** [korra-pickell/JevRAG](https://github.com/korra-pickell/JevRAG) (MIT), local at `C:\PRGM\JevRAG`. The Python package and CLI are named `jevragrank`.
 
 ## 1. Summary
 
@@ -358,9 +358,10 @@ The charts:
   - `.gitignore` excludes the model caches, embedding caches, the Jev response cache, and `.venv`.
   - `results/` (small JSONL and summary) and `docs/charts/` are committed.
 - **Publishing:**
-  - `gh` is installed at the end, and the user runs `gh auth login`.
-  - The public GitHub repo `jevragrank` is created and pushed **only after the user explicitly approves the final contents**.
+  - The remote `origin` = `https://github.com/korra-pickell/JevRAG.git` was created by the user; it is empty as of 2026-09-24.
+  - Pushing is outward-facing: it happens **only when the user says so**, and never with force-push.
   - Before the first push, the user may switch the commit email to their GitHub no-reply address.
+  - `gh` is optional: it is only needed if we want to set the repo description and topics, or read CI status from the CLI.
 
 ## 13. Risks
 | risk | mitigation |

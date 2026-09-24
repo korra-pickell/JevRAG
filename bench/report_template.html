@@ -1,0 +1,376 @@
+<title>JevRAGRank Benchmarks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --ground: #f6f7f9; --surface: #fcfcfb; --ink: #10151c; --ink2: #4a5361; --muted: #6b7482;
+  --hair: #dde1e6; --grid: #e1e0d9; --jevragrank: #2a78d6; --jevrank: #eb6834; --base: #898781;
+  --focus: #2a78d6;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0e1116; --surface: #1a1a19; --ink: #f2f4f7; --ink2: #aab2bd; --muted: #8a929e;
+    --hair: #2a3038; --grid: #2c2c2a; --jevragrank: #3987e5; --jevrank: #d95926; --focus: #6aa8ef;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0e1116; --surface: #1a1a19; --ink: #f2f4f7; --ink2: #aab2bd; --muted: #8a929e;
+  --hair: #2a3038; --grid: #2c2c2a; --jevragrank: #3987e5; --jevrank: #d95926; --focus: #6aa8ef;
+}
+body { margin: 0; background: var(--ground); color: var(--ink); font: 15px/1.55 var(--sans); }
+.page { max-width: 960px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 64px;
+        display: grid; gap: 28px; }
+h1 { font-size: 30px; line-height: 1.15; margin: 0; font-weight: 600; text-wrap: balance; }
+h2 { font-size: 18px; line-height: 1.3; margin: 0; font-weight: 600; text-wrap: balance; }
+p { margin: 0; max-width: 65ch; color: var(--ink2); }
+code { font: 13px var(--mono); }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+           color: var(--muted); }
+header { display: grid; gap: 10px; }
+.filters { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: flex-start;
+           padding-block: 12px; border-block: 1px solid var(--hair); }
+.filters fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.filters legend { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase;
+                  color: var(--muted); padding: 0; margin-bottom: 6px; }
+.row { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.seg { gap: 6px; }
+.seg button { font: 500 13px var(--sans); color: var(--ink2); background: transparent;
+              border: 1px solid var(--hair); padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+.seg button:hover { border-color: var(--muted); }
+.seg button[aria-pressed="true"] { color: var(--ink); background: var(--surface); border-color: var(--ink2); }
+label.sys { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink2);
+            cursor: pointer; min-height: 28px; }
+label.sys input { margin: 0; accent-color: var(--ink2); }
+.swatch { width: 12px; height: 12px; flex: none; display: block; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.card { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 18px;
+        display: grid; gap: 8px; min-width: 0; }
+.chart { width: 100%; min-width: 0; margin-top: 6px; }
+.chart svg { max-width: 100%; height: auto; }
+.chart svg, .chart figure { --plot-background: var(--surface); }
+.chart figure { margin: 0; }
+.chart div[class*="-swatches"] { font: 12px var(--sans); color: var(--ink2); margin-bottom: 4px; }
+.chart .empty { font-size: 13px; color: var(--muted); padding-block: 24px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 16px; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 13px var(--mono); font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--hair); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; font-family: var(--sans); padding-left: 0; }
+th { color: var(--muted); font-weight: 500; font-size: 12px; }
+td.tie, td.worse { color: var(--muted); }
+td.better { color: var(--ink); font-weight: 500; }
+.pill { font: 500 11px var(--mono); padding: 1px 7px; border-radius: 99px; border: 1px solid var(--hair);
+        color: var(--ink2); margin-left: 4px; }
+.method ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.method li { color: var(--ink2); max-width: 70ch; }
+@media (max-width: 520px) { h1 { font-size: 25px; } .card { padding: 14px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="page">
+  <header>
+    <span class="eyebrow">Open benchmark · BEIR test splits</span>
+    <h1>Typed-decision reranking against standard RAG</h1>
+    <p id="lede"></p>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filters for every chart below">
+    <fieldset><legend>Dataset</legend><div class="row seg" id="dataset-seg"></div></fieldset>
+    <fieldset><legend>Systems</legend><div class="row" id="system-boxes"></div></fieldset>
+  </div>
+
+  <section class="card">
+    <h2>Speed vs accuracy</h2>
+    <p>Each point is one system. p50 latency per query on a log scale against nDCG@10, with 95% bootstrap intervals. Up and to the left is better.</p>
+    <div class="chart" id="chart-scatter"></div>
+  </section>
+
+  <section class="card">
+    <h2>All results</h2>
+    <p>Every run on this dataset, ablations included. “vs CE” is a paired randomization test on nDCG@10 against the cross-encoder, p &lt; 0.05.</p>
+    <div class="table-wrap"><table id="results-table"></table></div>
+  </section>
+
+  <div class="grid2">
+    <section class="card"><h2>Rerank depth</h2><p>SciFact. Accuracy as more dense candidates are reranked.</p><div class="chart" id="chart-depth"></div></section>
+    <section class="card"><h2>Question type</h2><p>JevRAGRank with each Jev primitive.</p><div class="chart" id="chart-strategy"></div></section>
+    <section class="card"><h2>Corpus size</h2><p>SciFact subsets, 50 queries: latency grows with the corpus only for the embedding-free tournament.</p><div class="chart" id="chart-scaling"></div></section>
+    <section class="card"><h2>Model size</h2><p>decider-0.8B vs decider-2B.</p><div class="chart" id="chart-model"></div></section>
+  </div>
+
+  <section class="card method">
+    <h2>Method</h2>
+    <ul>
+      <li>JevRAGRank: bge-base-en-v1.5 dense retrieval selects candidates; decider-2b answers one typed <code>score</code> question per candidate (five levels from “irrelevant” to “fully answers”).</li>
+      <li>JevRank: no embeddings. Batched <code>choice</code> questions over groups of documents keep the likeliest few per group, round after round, then a <code>score</code> round ranks the finalists.</li>
+      <li>Baselines: BM25 (bm25s), dense only, dense → bge-reranker-base, dense → Qwen3.5-2B-Base prompted for a 0–4 rating (the model decider-2b was fine-tuned from).</li>
+      <li>Jev settings were tuned on SciFact train and NFCorpus dev; test splits were run once. Latency is measured one query at a time after five warm-up queries, with no response cache.</li>
+      <li id="env-line"></li>
+    </ul>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
+<script>
+const SUMMARY = __SUMMARY_JSON__;
+const LABELS = {"bm25": "BM25", "dense": "Dense", "dense+ce": "Dense → cross-encoder",
+  "dense+llm": "Dense → Qwen prompt", "jevragrank": "JevRAGRank", "jevrank": "JevRank"};
+const DS_TITLES = {"scifact": "SciFact", "nfcorpus": "NFCorpus"};
+const MAIN = ["bm25", "dense", "dense+ce", "dense+llm", "jevragrank", "jevrank"];
+// Plot symbol names; baselines share one gray, so the shape carries identity.
+const SYMBOL = {"bm25": "square", "dense": "diamond2", "dense+ce": "triangle",
+  "dense+llm": "star", "jevragrank": "circle", "jevrank": "circle"};
+const datasets = Object.keys(SUMMARY.datasets || {}).filter(d => !d.includes("-"));
+const state = { dataset: datasets[0], systems: new Set(MAIN) };
+try { const saved = localStorage.getItem("jrr-dataset"); if (datasets.includes(saved)) state.dataset = saved; } catch (e) {}
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const colorOf = s => s === "jevragrank" ? css("--jevragrank") : s === "jevrank" ? css("--jevrank") : css("--base");
+const runs = () => (SUMMARY.datasets[state.dataset] || {}).runs || {};
+const dsTitle = d => DS_TITLES[d] || d;
+const fmt = (v, d = 3) => v == null || Number.isNaN(v) ? "—" : v.toFixed(d);
+const ms = s => s == null ? "—" : s * 1000 < 10 ? (s * 1000).toFixed(1) : Math.round(s * 1000).toLocaleString("en-US");
+const esc = v => String(v).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"})[c]);
+const widthOf = id => Math.max(280, Math.floor(document.getElementById(id).clientWidth || 420));
+
+function plotStyle() {
+  return { background: "transparent", color: css("--ink2"), fontFamily: css("--sans"), fontSize: "12px" };
+}
+
+function swatchSvg(s) {
+  const d3sym = { square: "symbolSquare", diamond2: "symbolDiamond2", triangle: "symbolTriangle", star: "symbolStar", circle: "symbolCircle" }[SYMBOL[s]];
+  const path = typeof d3 !== "undefined" ? d3.symbol(d3[d3sym], 70)() : "M-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0";
+  return `<svg class="swatch" viewBox="-6 -6 12 12" aria-hidden="true"><path d="${path}" fill="${colorOf(s)}"></path></svg>`;
+}
+
+function buildFilters() {
+  const seg = document.getElementById("dataset-seg");
+  for (const d of datasets) {
+    const b = document.createElement("button");
+    b.type = "button"; b.id = "ds-" + d.replace(/\W/g, "_"); b.textContent = dsTitle(d);
+    b.onclick = () => { state.dataset = d; try { localStorage.setItem("jrr-dataset", d); } catch (e) {} render(); };
+    seg.appendChild(b);
+  }
+  const boxes = document.getElementById("system-boxes");
+  for (const s of MAIN) {
+    const id = "sys-" + s.replace(/\W/g, "_");
+    const l = document.createElement("label"); l.className = "sys"; l.htmlFor = id;
+    l.innerHTML = `<input type="checkbox" id="${id}" checked><span class="sw"></span>${esc(LABELS[s])}`;
+    l.querySelector("input").onchange = e => { e.target.checked ? state.systems.add(s) : state.systems.delete(s); render(); };
+    boxes.appendChild(l);
+  }
+}
+
+function syncFilters() {
+  for (const d of datasets) document.getElementById("ds-" + d.replace(/\W/g, "_")).setAttribute("aria-pressed", String(d === state.dataset));
+  for (const s of MAIN) document.getElementById("sys-" + s.replace(/\W/g, "_")).nextElementSibling.innerHTML = swatchSvg(s);
+}
+
+function empty(text = "Not run for this dataset.") {
+  const p = document.createElement("p"); p.className = "empty"; p.textContent = text; return p;
+}
+
+function scatter() {
+  const r = runs();
+  const rows = MAIN.filter(s => r[s] && state.systems.has(s)).map(s => {
+    const n = r[s].metrics["ndcg@10"];
+    return { s, name: LABELS[s], x: r[s].latency.p50 * 1000, y: n.mean, lo: n.ci[0], hi: n.ci[1] };
+  });
+  if (!rows.length) return empty("No systems selected.");
+  const width = widthOf("chart-scatter");
+  const opts = {
+    width, height: Math.round(Math.min(400, Math.max(300, width * 0.45))),
+    marginLeft: 46, marginRight: 16, marginTop: 24, marginBottom: 40, style: plotStyle(),
+    x: { type: "log", label: "p50 latency (ms) →", grid: true, inset: 14, ticks: logTicks(rows.map(d => d.x)), tickFormat: kfmt },
+    y: { label: "↑ nDCG@10", grid: true, inset: 8, ticks: 5, tickFormat: ".2f" }
+  };
+  const base = [
+    Plot.ruleX(rows, { x: "x", y1: "lo", y2: "hi", stroke: d => colorOf(d.s), strokeWidth: 1.5 }),
+    Plot.dot(rows, { x: "x", y: "y", r: 6, fill: d => colorOf(d.s), stroke: css("--surface"), strokeWidth: 2, symbol: d => SYMBOL[d.s] })
+  ];
+  // First pass fixes the scales; labels are then placed where they clear every point, interval and other label.
+  const probe = Plot.plot({ ...opts, marks: base });
+  placeLabels(rows, probe.scale("x").apply, probe.scale("y").apply,
+    { x0: opts.marginLeft, x1: width - opts.marginRight, y0: 16, y1: opts.height - opts.marginBottom });
+  return Plot.plot({ ...opts, marks: [
+    ...base,
+    ...rows.map(d => Plot.text([d], { x: "x", y: "y", text: "name", dx: d.dx, dy: d.dy, textAnchor: d.anchor, fill: css("--ink2") })),
+    Plot.tip(rows, Plot.pointer({ x: "x", y: "y", title: d => `${d.name}\nnDCG@10 ${fmt(d.y)} (${fmt(d.lo)}–${fmt(d.hi)})\np50 ${ms(d.x / 1000)} ms` }))
+  ] });
+}
+
+const measure = (() => { let ctx; return t => {
+  ctx = ctx || document.createElement("canvas").getContext("2d");
+  ctx.font = `12px ${css("--sans")}`; return ctx.measureText(t).width; }; })();
+
+function placeLabels(rows, sx, sy, bounds) {
+  const obstacles = rows.flatMap(d => {
+    d.px = sx(d.x); d.py = sy(d.y);
+    return [{ x0: d.px - 8, x1: d.px + 8, y0: d.py - 8, y1: d.py + 8 },
+            { x0: d.px - 2, x1: d.px + 2, y0: sy(d.hi), y1: sy(d.lo) }];
+  });
+  const overlap = (a, b) => Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0)) * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
+  const spots = [[11, 0, "start"], [-11, 0, "end"], [11, -13, "start"], [-11, -13, "end"],
+                 [11, 13, "start"], [-11, 13, "end"], [0, -19, "middle"], [0, 19, "middle"]];
+  const order = [...rows].sort((a, b) => (b.s.startsWith("jev") ? 1 : 0) - (a.s.startsWith("jev") ? 1 : 0));
+  for (const d of order) {
+    const w = measure(d.name) + 4, h = 15;
+    let best = null;
+    for (const [dx, dy, anchor] of spots) {
+      const x0 = d.px + dx - (anchor === "start" ? 0 : anchor === "end" ? w : w / 2);
+      const box = { x0, x1: x0 + w, y0: d.py + dy - h / 2, y1: d.py + dy + h / 2 };
+      const out = Math.max(0, bounds.x0 - box.x0) + Math.max(0, box.x1 - bounds.x1) + Math.max(0, bounds.y0 - box.y0) + Math.max(0, box.y1 - bounds.y1);
+      const cost = out * 1000 + obstacles.reduce((c, o) => c + overlap(box, o), 0);
+      if (!best || cost < best.cost) best = { cost, box, dx, dy, anchor };
+      if (cost === 0) break;
+    }
+    Object.assign(d, { dx: best.dx, dy: best.dy, anchor: best.anchor });
+    obstacles.push(best.box);
+  }
+}
+
+// 1-2-5 ticks inside the data range; only powers of ten when that would be crowded.
+function logTicks(values) {
+  const lo = Math.min(...values), hi = Math.max(...values), out = [];
+  for (let e = Math.floor(Math.log10(lo)); e <= Math.ceil(Math.log10(hi)); e++)
+    for (const m of [1, 2, 5]) { const v = Number((m * 10 ** e).toPrecision(3)); if (v >= lo && v <= hi) out.push(v); }
+  const decades = out.filter(v => String(v).replace(/^0\.0*/, "").startsWith("1"));
+  if (out.length > 6 && decades.length >= 2) return decades;
+  return out.length >= 2 ? out : undefined;
+}
+const kfmt = v => v >= 1000 ? `${Number((v / 1000).toPrecision(3))}k` : String(v);
+
+function table() {
+  const r = runs();
+  const names = Object.keys(r).filter(n => state.systems.has(r[n].system))
+    .sort((a, b) => r[b].metrics["ndcg@10"].mean - r[a].metrics["ndcg@10"].mean);
+  const ce = r["dense+ce"]?.metrics["ndcg@10"].mean;
+  const head = "<tr><th>Run</th><th>nDCG@10</th><th>95% CI</th><th>Recall@10</th><th>MRR@10</th><th>p50 ms</th><th>p95 ms</th><th>q/s @16</th><th>Cand. recall</th><th>vs CE</th></tr>";
+  const body = names.map(n => {
+    const x = r[n], m = x.metrics;
+    const vs = x.p_vs_ce == null || ce == null ? "—" : x.p_vs_ce >= 0.05 ? "tie" : (m["ndcg@10"].mean > ce ? "better" : "worse");
+    const label = esc(LABELS[x.system] || x.system) + (x.label ? `<span class="pill">${esc(x.label)}</span>` : "");
+    return `<tr><td>${label}</td><td>${fmt(m["ndcg@10"].mean)}</td><td>${fmt(m["ndcg@10"].ci[0])}–${fmt(m["ndcg@10"].ci[1])}</td><td>${fmt(m["recall@10"].mean)}</td><td>${fmt(m["mrr@10"].mean)}</td><td>${ms(x.latency.p50)}</td><td>${ms(x.latency.p95)}</td><td>${x.qps == null ? "—" : x.qps.toFixed(1)}</td><td>${fmt(x.candidate_recall)}</td><td class="${vs === "—" ? "" : vs}">${vs}</td></tr>`;
+  }).join("");
+  document.getElementById("results-table").innerHTML = `<thead>${head}</thead><tbody>${body || '<tr><td colspan="10">No systems selected.</td></tr>'}</tbody>`;
+}
+
+function labelled(source, system, prefix) {
+  return Object.values(source).filter(x => x.system === system && x.label.startsWith(prefix) && /^\d+$/.test(x.label.slice(prefix.length)));
+}
+
+function lineChart(id, series, xLabel, yLabel, xType, yType, yFormat) {
+  series = series.filter(d => d.pts.length);
+  const rows = series.flatMap(({ s, pts }) => pts.map(([x, y]) => ({ s, name: LABELS[s], x, y })));
+  if (!rows.length) return empty();
+  const fy = yFormat || (v => v.toFixed(3));
+  return Plot.plot({
+    width: widthOf(id), height: 260, style: plotStyle(), marginLeft: 50, marginRight: 16, marginTop: 24, marginBottom: 40,
+    x: { type: xType, label: xLabel, grid: true, inset: 8, ...(xType === "log" ? { ticks: logTicks(rows.map(d => d.x)), tickFormat: kfmt } : {}) },
+    y: { type: yType, label: yLabel, grid: true, inset: 6, ...(yType === "log" ? { ticks: logTicks(rows.map(d => d.y)), tickFormat: kfmt } : { ticks: 5, tickFormat: ".2f" }) },
+    color: { domain: series.map(d => LABELS[d.s]), range: series.map(d => colorOf(d.s)), legend: true },
+    marks: [
+      Plot.line(rows, { x: "x", y: "y", stroke: "name", strokeWidth: 2 }),
+      Plot.dot(rows, { x: "x", y: "y", fill: "name", r: 4.5, stroke: css("--surface"), strokeWidth: 2 }),
+      Plot.tip(rows, Plot.pointer({ x: "x", y: "y", title: d => `${d.name}\n${xLabel.replace(/ →/, "")}: ${d.x.toLocaleString("en-US")}\n${yLabel.replace(/↑ /, "")}: ${fy(d.y)}` }))
+    ]
+  });
+}
+
+function barChart(id, rows) {
+  if (!rows.length) return empty();
+  return Plot.plot({
+    width: widthOf(id), height: 240, style: plotStyle(), marginLeft: 46, marginBottom: 36, marginTop: 24,
+    x: { label: null, domain: rows.map(d => d.name), padding: 0.45 },
+    y: { label: "↑ nDCG@10", grid: true, domain: [0, 1], ticks: 5, tickFormat: ".1f" },
+    marks: [
+      Plot.barY(rows, { x: "name", y: "y", fill: d => d.fill, ry1: 4 }),
+      Plot.text(rows, { x: "name", y: "y", text: d => fmt(d.y), dy: -8, fill: css("--ink2") }),
+      Plot.tip(rows, Plot.pointerX({ x: "name", y: "y", title: d => `${d.name}\nnDCG@10 ${fmt(d.y)}` }))
+    ]
+  });
+}
+
+function depthChart() {
+  const sci = SUMMARY.datasets.scifact?.runs || {};
+  const series = ["jevragrank", "dense+ce"].filter(s => state.systems.has(s)).map(s => {
+    const rs = labelled(sci, s, "k").concat(sci[s] ? [sci[s]] : []);
+    return { s, pts: rs.map(r => [(r.options || {}).candidates ?? 50, r.metrics["ndcg@10"].mean]).sort((a, b) => a[0] - b[0]) };
+  });
+  return lineChart("chart-depth", series, "candidates reranked →", "↑ nDCG@10", "log", "linear");
+}
+
+function scalingChart() {
+  const sci = SUMMARY.datasets.scifact?.runs || {};
+  const series = ["jevrank", "jevragrank", "dense"].filter(s => state.systems.has(s)).map(s => ({
+    s, pts: labelled(sci, s, "n").filter(r => r.corpus_size != null).map(r => [r.corpus_size, r.latency.p50 * 1000]).sort((a, b) => a[0] - b[0])
+  }));
+  return lineChart("chart-scaling", series, "documents →", "↑ p50 latency (ms)", "log", "log",
+    v => (v < 10 ? v.toFixed(1) : Math.round(v).toLocaleString("en-US")) + " ms");
+}
+
+function strategyChart() {
+  const r = runs();
+  if (!state.systems.has("jevragrank")) return empty("JevRAGRank is filtered out.");
+  return barChart("chart-strategy", [["score", "jevragrank"], ["noul", "jevragrank@noul"], ["choice", "jevragrank@choice"]]
+    .filter(([, k]) => r[k]).map(([name, k]) => ({ name, y: r[k].metrics["ndcg@10"].mean, fill: colorOf("jevragrank") })));
+}
+
+function modelChart() {
+  const r = runs(), rows = [];
+  for (const s of ["jevragrank", "jevrank"].filter(s => state.systems.has(s))) {
+    if (r[`${s}@0.8b`]) rows.push({ name: `${LABELS[s]} 0.8B`, y: r[`${s}@0.8b`].metrics["ndcg@10"].mean, fill: `color-mix(in srgb, ${colorOf(s)} 45%, ${css("--surface")})` });
+    if (r[s]) rows.push({ name: `${LABELS[s]} 2B`, y: r[s].metrics["ndcg@10"].mean, fill: colorOf(s) });
+  }
+  return barChart("chart-model", rows);
+}
+
+function mount(id, build) {
+  const el = document.getElementById(id);
+  try { el.replaceChildren(build()); } catch (e) { console.error(e); el.replaceChildren(empty("This chart could not be drawn; the table has every number.")); }
+}
+
+function renderCharts() {
+  if (typeof Plot === "undefined") {
+    document.getElementById("chart-scatter").replaceChildren(empty("Charts need the Plot library, which didn't load; the table below has every number."));
+    return;
+  }
+  mount("chart-scatter", scatter);
+  mount("chart-depth", depthChart);
+  mount("chart-strategy", strategyChart);
+  mount("chart-scaling", scalingChart);
+  mount("chart-model", modelChart);
+}
+
+function render() {
+  if (!state.dataset) { document.getElementById("lede").textContent = "No benchmark results yet."; return; }
+  syncFilters();
+  const r = runs(), best = MAIN.filter(s => r[s]).sort((a, b) => r[b].metrics["ndcg@10"].mean - r[a].metrics["ndcg@10"].mean)[0];
+  const jr = r.jevragrank, ce = r["dense+ce"];
+  document.getElementById("lede").textContent = jr && ce
+    ? `On ${dsTitle(state.dataset)}, JevRAGRank scores nDCG@10 ${fmt(jr.metrics["ndcg@10"].mean)} at ${ms(jr.latency.p50)} ms per query, against ${fmt(ce.metrics["ndcg@10"].mean)} at ${ms(ce.latency.p50)} ms for a bge cross-encoder. Best overall: ${LABELS[best]}.`
+    : "Benchmark results for JevRAGRank and JevRank against standard retrieval baselines.";
+  table();
+  renderCharts();
+}
+
+const env = SUMMARY.env || {};
+document.getElementById("env-line").textContent = `Hardware: ${env.gpu || "unknown GPU"}${env.driver ? ", driver " + env.driver : ""}. Generated ${SUMMARY.generated ? SUMMARY.generated.slice(0, 10) : ""}.`;
+buildFilters();
+render();
+// Label placement measures text, so redraw once the web font is in.
+document.fonts?.ready.then(() => { if (state.dataset) renderCharts(); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+let lastWidth = window.innerWidth, resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { if (window.innerWidth !== lastWidth) { lastWidth = window.innerWidth; if (state.dataset) renderCharts(); } }, 150);
+});
+</script>
